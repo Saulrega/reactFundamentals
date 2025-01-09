@@ -1,25 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import { Button } from './components'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [name, setName] = useState("Saul")
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const countMore= () => {
-    setCount((count) => count + 1)
+
+  const fetchData = async () => {
+    setLoading(true)
+    try{
+      const response = await fetch("https://api.example/data");
+      if(!response.ok){
+        throw new Error("Error al obtener datos")
+      }
+      const jsonData = await response.json();
+      
+      setData(jsonData)
+    }catch(err){
+      setError(err as string)
+    }finally{
+      setLoading(true)
+    }
   }
 
-  const changeName = () => {
-    setName("Gentleman")
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  if (loading){
+    return <div>Cargando...</div>
   }
 
-  return (
-    <>
-      <Button label={`Count is ${count}`} parentMethod={countMore}/>
-      <p>{name}</p>
-      <Button label='Change name' parentMethod={changeName}/>
-    </>
+  if (error){
+    return <div>Ups!! Hay un error: {error}</div>
+  }
+
+  return(
+    <div>{JSON.stringify(data)}</div>
   )
 }
 
