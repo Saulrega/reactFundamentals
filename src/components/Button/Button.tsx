@@ -1,19 +1,24 @@
-import { useEffect } from "react"
+import { ReactNode } from "react"
 import "./Button.css"
 
 interface Props {
-    label: string,
+    children: ReactNode,
     parentMethod: () => void
 }
 
-export const Button = ({label, parentMethod}: Props) => {
+interface ChildrenProps {
+    children: ReactNode,
+}
 
-    useEffect(() => {
-        console.log("label cambio")
-    }, [label])
+export const ColorRed = ({children}: ChildrenProps) => {
+    return (<div className="color-red">{ children }</div>)
+}
+
+export const Button = ({children, parentMethod}: Props) => {
+
     return(
         <button className="custom-button" onClick={parentMethod}>
-            {label}
+            { children }
         </button>
     )
 }
