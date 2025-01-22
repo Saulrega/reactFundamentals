@@ -1,0 +1,67 @@
+import { useMemo, useState } from "react";
+
+ interface Items{
+    id: number;
+    name: string;
+    price: number
+ }
+
+export const ShoppingCart = () => {
+    const [items, setItems] = useState<Items[]>([
+        {
+            id: 1, name: "Manzana", price: 1.5
+        },
+        {
+            id: 2, name: "Pera", price: 2.7
+        },
+        {
+            id: 3, name: "Leche", price: 1.0
+        }
+    ]);
+
+    const [discout, setDiscout] = useState<number>(0)
+
+    const totalCost =useMemo(() => 
+        items.reduce((total, item) => total + item.price, 0),
+        [items]
+    )
+
+    const finalCost = useMemo(() => totalCost - discout ,[totalCost, discout]);
+
+    const addItem = () => {
+        const newItem = {
+            id: items.length + 1,
+            name: `Producto ${items.length + 1}`,
+            price: Math.random() * 5
+        }
+
+        setItems([...items, newItem])
+    }
+
+    return(
+        <div>
+            <h2>Lista de compras</h2>
+
+            <ul>
+                {
+                    items.map(item =>(
+                        <li key={item.id}>
+                            {item.name}: ${item.price.toFixed(2)}
+                        </li>
+                    ))
+                }
+            </ul>
+
+            <p>Costo Total: ${totalCost.toFixed(2)}</p>
+
+            <p>
+                Descuento: $ 
+                <input type="number" value={discout} onChange={e => setDiscout(parseFloat(e.target.value) || 0)} />
+            </p>
+
+            <p>Costo Final: ${finalCost.toFixed(2)}</p>
+
+            <button onClick={addItem}>Agregar Producto</button>
+        </div>
+    )
+}
