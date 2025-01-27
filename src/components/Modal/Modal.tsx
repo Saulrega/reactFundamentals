@@ -25,6 +25,7 @@ export const Modal = ({children} : Props) => {
         const handleEsc = (e: KeyboardEvent) => {
             if(e.key === "Escape"){
                 setState(false)
+                throw new Error("Se murió el tío Pepe")
             }
         }
         if(state){
