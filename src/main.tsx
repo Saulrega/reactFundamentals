@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>
       <ModdalProvider>
         <App />
-      </ModdalProvider>z
+      </ModdalProvider>
     </ErrorBoundary>
   </StrictMode>,
 )
