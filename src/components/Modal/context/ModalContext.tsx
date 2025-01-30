@@ -9,7 +9,7 @@ const ModalContext = createContext<{
 });
 
 
-const ModdalProvider = ({children} : { children: ReactNode}) => {
+const ModalProvider = ({children} : { children: ReactNode}) => {
     const [state, setState] = useState<boolean>(false)
 
     return <ModalContext.Provider value={{state, setState}}>{children}</ModalContext.Provider>
@@ -17,5 +17,5 @@ const ModdalProvider = ({children} : { children: ReactNode}) => {
 
 export {
     ModalContext,
-    ModdalProvider
+    ModalProvider
 }
